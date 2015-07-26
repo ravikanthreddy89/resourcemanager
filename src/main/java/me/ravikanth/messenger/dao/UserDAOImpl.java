@@ -39,6 +39,14 @@ public class UserDAOImpl implements UserDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+            try{
+                if(rs != null) rs.close();
+                if(stmt != null) stmt.close();
+                if(conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return ret;
@@ -59,19 +67,25 @@ public class UserDAOImpl implements UserDAO {
 
             cstmt.executeUpdate();
 
-            //if(status){
-                int pId = cstmt.getInt(4);
-                user.setId(pId);
-                int pRet = cstmt.getInt(5);
-                if(pRet == 0){
-                  ret = 0;
-                }else {
-                    ret = pRet;
-                }
-            //}
+            int pId = cstmt.getInt(4);
+            user.setId(pId);
+            int pRet = cstmt.getInt(5);
+            if(pRet == 0){
+                ret = 0;
+            }else {
+                ret = pRet;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally{
+             try {
+                 if(rs != null)   rs.close();
+                 if(cstmt != null) cstmt.close();
+                 if(conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return ret;
     }
